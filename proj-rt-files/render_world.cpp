@@ -22,16 +22,15 @@ Render_World::~Render_World()
 // to ensure that hit.dist>=small_t.
 Hit Render_World::Closest_Intersection(const Ray& ray)
 {
-    //TODO;
-	double min_t = double.max;
+	double min_t = (1.8 * pow(10,308));
 	Hit hit;
 	
-	for(int i = 0; i < objects.size(); i++)
+	for(unsigned int i = 0; i < objects.size(); i++)
 	{
-		for(int j = 0; j > 0; j--)
+		for(double j = 0; j < min_t; j++)
 		{
-			Hit intersect = object.intersection(ray,j);
-			if(intersect != NULL && intersect.dist < hit.dist)
+			Hit intersect = hit.object->Intersection(ray,j);
+			if(intersect.object != NULL && intersect.dist < hit.dist)
 			{
 				hit = intersect;
 			}
@@ -75,11 +74,16 @@ vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
 	Hit hit = Closest_Intersection(ray);
 	if (hit.object != NULL)
 	{
-		color = hit.object->material_shader.Shade_Surface(ray,ray.point(hit.dist),hit.object->Normal(ray.point(hit.dist)));
+		color = hit.object->material_shader->Shade_Surface(ray,ray.Point(hit.dist),hit.object->Normal(ray.Point(hit.dist),hit.part),1);
 	}
 	else
 	{
-		color = background_shader.Shade_Surface(ray);
+		vec3 zero;
+
+		zero[0] = 0;
+		zero[1] = 0;
+		zero[2] = 0;
+		color = background_shader->Shade_Surface(ray,zero,zero,0);
 	}
     return color;
 }
