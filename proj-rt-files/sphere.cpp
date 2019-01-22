@@ -47,8 +47,11 @@ vec3 Sphere::Normal(const vec3& point, int part) const
     vec3 normal;
 
     //TODO; // compute the normal direction
-	normal = 2 * (point - center);
-    return normal;
+	normal = (point - center);
+    	normal[0] *= 2;
+	normal[1] *= 2;
+	normal[2] *= 2;
+	return normal;
 }
 
 Box Sphere::Bounding_Box(int part) const
