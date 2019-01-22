@@ -15,6 +15,8 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
 
 	if (discriminant < 0)
 	{
+		hit.object = NULL;
+		hit.dist = -1;
 		return hit;
 	}
 	else if (discriminant == 0)

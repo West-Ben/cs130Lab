@@ -24,17 +24,15 @@ Hit Render_World::Closest_Intersection(const Ray& ray)
 {
 	double min_t = (1.8 * pow(10,100));
 	Hit hit;
+	hit.dist = min_t;
 	
 	for(unsigned int i = 0; i < objects.size(); i++)
 	{
-		for(double j = 0; j < min_t; j++)
+		Hit intersect = objects[i]->Intersection(ray,0);
+		if(intersect.object != NULL && intersect.dist < hit.dist)
 		{
-			Hit intersect = hit.object->Intersection(ray,j);
-			if(intersect.object != NULL && intersect.dist < hit.dist)
-			{
-				hit = intersect;
-			}
-		}			
+			hit = intersect;
+		}		
 	}
 		
     return hit;
