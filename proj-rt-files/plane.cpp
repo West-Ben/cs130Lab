@@ -18,10 +18,10 @@ Hit Plane::Intersection(const Ray& ray, int part) const
 		return hit;
 	}
 	
-	distance = sqrt(pow(x1[0] - ray.endpoint[0],2) + pow(x1[1] - ray.endpoint[1],2) + pow(x1[2] - ray.endpoint[2],2));
+	double distance = sqrt(pow(x1[0] - ray.endpoint[0],2) + pow(x1[1] - ray.endpoint[1],2) + pow(x1[2] - ray.endpoint[2],2));
 	double t = -(dot(normal,ray.endpoint) + distance)/(dot(normal,ray.direction));
 	
-	vec3 point = ray.point(t);
+	vec3 point = ray.Point(t);
 	if (t < 0)
 	{
 		hit.object = NULL;

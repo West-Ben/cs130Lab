@@ -13,7 +13,11 @@ void Hierarchy::Reorder_Entries()
 void Hierarchy::Build_Tree()
 {
     if(!entries.size()) return;
-    TODO;
+    //TODO;
+	for (int i = 0; i < entries.size(); i++)
+	{
+		
+	}
 }
 
 // Return a list of candidates (indices into the entries list) whose
