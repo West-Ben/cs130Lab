@@ -1,5 +1,6 @@
 #include "camera.h"
-
+#include <iostream>
+using namespace std;
 Camera::Camera()
     :colors(0)
 {
@@ -41,17 +42,24 @@ void Camera::Set_Resolution(const ivec2& number_pixels_input)
 // Find the world position of the input pixel
 vec3 Camera::World_Position(const ivec2& pixel_index)
 {
-    vec3 result;
+
+   	vec3 result;
+	vec2 cells = Cell_Center(pixel_index);
     //TODO;
-	result = film_position;
-	
-	result[0] += (horizontal_vector[0] * pixel_index[0]);
-	result[1] += horizontal_vector[1];
-	result[2] += horizontal_vector[2];
-	
-	result[0] += vertical_vector[0];
-	result[1] += (vertical_vector[1] * pixel_index[0]);
-	result[2] += vertical_vector[2];
-	
-    return result;
+    	vec3 horzCx;
+    	vec3 vertCy;			
+    	horzCx[0] = (horizontal_vector[0] * cells[0]);
+    	horzCx[1] = (horizontal_vector[1] * cells[0]);
+    	horzCx[2] = (horizontal_vector[2] * cells[0]);
+    	vertCy[0] = (vertical_vector[0] * cells[1]);
+    	vertCy[1] = (vertical_vector[1] * cells[1]);
+    	vertCy[2] = (vertical_vector[2] * cells[1]);
+    	
+	cout << endl;
+	cout << "horizontal_vector = " << horzCx << endl;
+	cout << "vertical_vector = " << vertCy << endl;
+	cout << endl;	
+	result = (film_position + horzCx + vertCy);
+    	cout << "worlpos = " << result << endl;
+	return result;
 }

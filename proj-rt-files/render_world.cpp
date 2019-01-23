@@ -22,36 +22,42 @@ Render_World::~Render_World()
 // to ensure that hit.dist>=small_t.
 Hit Render_World::Closest_Intersection(const Ray& ray)
 {
-	double min_t = (1.8 * pow(10,100));
+	double min_t = (1.8 * pow(10,308));
 	Hit hit;
+	hit.object = NULL;
 	hit.dist = min_t;
-	
-	for(unsigned int i = 0; i < objects.size(); i++)
+	hit.part = 0;
+	cout << "objects.size = " << objects.size() << endl;	
+	for(int i = 0; i < objects.size(); i++)
 	{
 		cout << "closest loop " << i << endl;
 		Hit intersect = objects[i]->Intersection(ray,0);
-		if(intersect.object != NULL && intersect.dist < hit.dist)
+		if(intersect.object != NULL && intersect.dist >= 0  && intersect.dist < hit.dist)
 		{
+			cout << "intersect being assigned " << endl;
 			hit = intersect;
-		}		
+		}
+				
 	}
-		
+	cout << "return closest " << endl;		
     return hit;
 }
 
 // set up the initial view ray and call
 void Render_World::Render_Pixel(const ivec2& pixel_index)
 {
-    //TODO; // set up the initial view ray here
-	vec3 worldPos = camera.World_Position(pixel_index);
-	double magOfWorldPos = sqrt(pow(worldPos[0],2) + pow(worldPos[1],2) + pow(worldPos[2],2) );
-	worldPos[0] /= magOfWorldPos;
-	worldPos[1] /= magOfWorldPos;
-	worldPos[2] /= magOfWorldPos;
 	
+	cout << "start render_pixel" << endl;
+    	cout << "x = " << pixel_index[0] << endl;
+	cout << "y = " << pixel_index[1] << endl;
+	//TODO; // set up the initial view ray here
+	vec3 worldPos = (camera.World_Position(pixel_index) - camera.position);
+	worldPos.normalized();
+
     Ray ray(camera.position,worldPos);
     vec3 color=Cast_Ray(ray,1);
     camera.Set_Pixel(pixel_index,Pixel_Color(color));
+	cout << "end render_pixel" << endl;
 }
 
 void Render_World::Render()
@@ -68,15 +74,25 @@ void Render_World::Render()
 // or the background color if there is no object intersection
 vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
 {
+	cout << "start cast_ray" << endl;
     vec3 color;
     //TODO; // determine the color here
+	
+	
 	Hit hit = Closest_Intersection(ray);
+	cout << "hit.part = " << hit.part << endl;
+
 	if (hit.object != NULL)
 	{
-		color = hit.object->material_shader->Shade_Surface(ray,ray.Point(hit.dist),hit.object->Normal(ray.Point(hit.dist),hit.part),1);
+		cout << "material shader = " << hit.object->material_shader << endl;
+		cout << "ray point = " << ray.Point(hit.dist) << endl; 
+		cout << "object is exists" << endl;
+		color = hit.object->material_shader->Shade_Surface(ray,ray.Point(hit.dist),hit.object->Normal(ray.Point(hit.dist),hit.part),recursion_depth);
+		cout << "object color assined" << endl;
 	}
 	else
 	{
+		cout << "object is NULL" << endl;
 		vec3 zero;
 
 		zero[0] = 0;
@@ -84,6 +100,7 @@ vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
 		zero[2] = 0;
 		color = background_shader->Shade_Surface(ray,zero,zero,0);
 	}
+	cout << "end cast_ray" << endl;
     return color;
 }
 
@@ -106,4 +123,5 @@ void Render_World::Initialize_Hierarchy()
 	
     hierarchy.Reorder_Entries();
     hierarchy.Build_Tree();
+	cout << "end hierarchy" << endl;
 }
