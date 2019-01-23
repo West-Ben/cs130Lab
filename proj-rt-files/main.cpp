@@ -1,6 +1,5 @@
 #include "render_world.h"
 #include "object.h"
-#include <iostream>
 #include <cstdio>
 #include <unistd.h>
 
@@ -26,7 +25,7 @@
   information about the rendering of a single pixel.  This allows you to be
   verbose about a pixel of interest without printing this information for every
   pixel.  For many of the scenes, there is a pixel trace on the project page
-  detailing the results of various computations (intersections, shading, etc.)
+  detailing the resultsm of various computations (intersections, shading, etc.)
   for one specially chosen pixel.
 
   If you are getting the wrong results for a test, check to see if there is a

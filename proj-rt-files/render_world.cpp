@@ -3,7 +3,7 @@
 #include "object.h"
 #include "light.h"
 #include "ray.h"
-
+using namespace std;
 extern bool disable_hierarchy;
 
 Render_World::Render_World()
@@ -28,6 +28,7 @@ Hit Render_World::Closest_Intersection(const Ray& ray)
 	
 	for(unsigned int i = 0; i < objects.size(); i++)
 	{
+		cout << "closest loop " << i << endl;
 		Hit intersect = objects[i]->Intersection(ray,0);
 		if(intersect.object != NULL && intersect.dist < hit.dist)
 		{
@@ -95,6 +96,7 @@ void Render_World::Initialize_Hierarchy()
 	{
 		for (int j = 0; j < objects[i]->number_parts; j++)
 		{
+			cout << "Initialize_Hierarchy loop i = " << i << " j = " << j << endl;
 			Entry ent;
 			ent.obj = objects[i];
 			ent.part = j;
