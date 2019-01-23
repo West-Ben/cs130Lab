@@ -93,12 +93,12 @@ void Render_World::Initialize_Hierarchy()
 	 
 	for (int i = 0; i < objects.size();i++)
 	{
-		for (int j = 0; j < objects[i].number_parts; j++)
+		for (int j = 0; j < objects[i]->number_parts; j++)
 		{
 			Entry ent;
 			ent.obj = objects[i];
 			ent.part = j;
-			ent.box = objects[i].Bounding_Box(j);
+			ent.box = objects[i]->Bounding_Box(j);
 		}
 	}
 	

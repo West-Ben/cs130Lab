@@ -59,9 +59,9 @@ Box Sphere::Bounding_Box(int part) const
     Box box;
     //TODO; // calculate bounding box
 	vec3 rad;
-	red[0] = radius;
-	red[1] = radius;
-	red[2] = radius;
+	rad[0] = radius;
+	rad[1] = radius;
+	rad[2] = radius;
 	box.lo = center - rad;
 	box.hi = center + rad;
     return box;
