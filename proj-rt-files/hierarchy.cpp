@@ -16,7 +16,7 @@ void Hierarchy::Build_Tree()
     //TODO;
 	for (int i = 0; i < entries.size(); i++)
 	{
-		
+		tree.push_back(entries[i].box);
 	}
 }
 
