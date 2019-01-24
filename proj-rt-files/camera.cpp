@@ -49,17 +49,18 @@ vec3 Camera::World_Position(const ivec2& pixel_index)
     	vec3 horzCx;
     	vec3 vertCy;			
     	horzCx[0] = (horizontal_vector[0] * cells[0]);
-    	horzCx[1] = (horizontal_vector[1] * cells[0]);
-    	horzCx[2] = (horizontal_vector[2] * cells[0]);
-    	vertCy[0] = (vertical_vector[0] * cells[1]);
+    	horzCx[1] = horizontal_vector[1] * cells[0];
+    	horzCx[2] = horizontal_vector[2] * cells[0];
+    	vertCy[0] = vertical_vector[0] * cells[1]; 
     	vertCy[1] = (vertical_vector[1] * cells[1]);
-    	vertCy[2] = (vertical_vector[2] * cells[1]);
+    	vertCy[2] = vertical_vector[2] * cells[1];
     	
 	cout << endl;
 	cout << "horizontal_vector = " << horzCx << endl;
 	cout << "vertical_vector = " << vertCy << endl;
-	cout << endl;	
+	
 	result = (film_position + horzCx + vertCy);
     	cout << "worlpos = " << result << endl;
+	cout << endl;
 	return result;
 }

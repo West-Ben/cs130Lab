@@ -30,11 +30,15 @@ Hit Render_World::Closest_Intersection(const Ray& ray)
 	cout << "objects.size = " << objects.size() << endl;	
 	for(int i = 0; i < objects.size(); i++)
 	{
+		cout << "object number of parts =" << objects[i]->number_parts << endl;
+		cout << "object material shader = " << objects[i]->material_shader << endl;
+
 		cout << "closest loop " << i << endl;
 		Hit intersect = objects[i]->Intersection(ray,0);
 		if(intersect.object != NULL && intersect.dist >= 0  && intersect.dist < hit.dist)
 		{
 			cout << "intersect being assigned " << endl;
+			hit.object = objects[i];
 			hit = intersect;
 		}
 				
@@ -78,9 +82,11 @@ vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
     vec3 color;
     //TODO; // determine the color here
 	
-	
 	Hit hit = Closest_Intersection(ray);
+
+	vec3 point = ray.Point(hit.dist);	
 	cout << "hit.part = " << hit.part << endl;
+	cout << "hit.normal = " << hit.object->Normal(point,hit.part);
 
 	if (hit.object != NULL)
 	{

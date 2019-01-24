@@ -61,7 +61,6 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
 		}
 		cout << "double distancemin = " << distancemin << endl;
 		cout << "double distanceplus = " << distanceplus << endl;
-		hit.object = new Sphere(center,radius); 
 	}
 	
 	cout << "end sphere intersection" << endl;
@@ -70,6 +69,7 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
 
 vec3 Sphere::Normal(const vec3& point, int part) const
 {
+	cout << "sphere normal" << endl;
     vec3 normal;
 	cout << "start sphere normal" << endl;
     //TODO; // compute the normal direction
