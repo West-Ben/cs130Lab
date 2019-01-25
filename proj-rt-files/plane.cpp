@@ -31,6 +31,7 @@ Hit Plane::Intersection(const Ray& ray, int part) const
 	}
 	else
 	{
+		hit.object = this;
 		hit.dist = sqrt(pow(point[0] - ray.endpoint[0],2) + pow(point[1] - ray.endpoint[1],2) + pow(point[2] - ray.endpoint[2],2));
 		hit.part = part;
 	}
