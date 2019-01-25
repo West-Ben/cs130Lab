@@ -61,6 +61,6 @@ vec3 Camera::World_Position(const ivec2& pixel_index)
 	
 	result = (film_position + horzCx + vertCy);
   //  	cout << "worlpos = " << result << endl;
-	cout << endl;
+//	cout << endl;
 	return result;
 }

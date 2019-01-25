@@ -5,26 +5,14 @@ using namespace std;
 Hit Sphere::Intersection(const Ray& ray, int part) const
 {
     //TODO;
-//	cout << "start sphere intersection" << endl;
     Hit hit;
-	double t;
-	double distance;
     vec3 eMinC;
-//	cout << endl;
-//	cout << "endpoint = " << ray.endpoint << endl;
-//	cout << "center = " << center << endl;
-//	cout << "ray direction = " << ray.direction << endl;
-	//cout << "radius = " << radius << endl;
-	//cout << endl;
 	eMinC = (ray.endpoint - center);
 
     double discriminant = pow(dot(ray.direction,eMinC),2) - (dot(ray.direction,ray.direction)*(dot(eMinC,eMinC) - pow(radius,2)));
-	//cout << "discriminant = " << discriminant << endl;
-	//cout << endl;
-	
+
 	if (discriminant <= 0)
 	{
-		//cout << "no intersection" << endl;
 		hit.object = NULL;
 		return hit;
 	}
@@ -33,27 +21,23 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
 		double tmin = ((-1 * dot(ray.direction,eMinC) / dot(ray.direction,ray.direction)) - (sqrt(discriminant)) / (dot(ray.direction,ray.direction)));
 		double tplus = ((-1 * dot(ray.direction,eMinC) / dot(ray.direction,ray.direction)) + (sqrt(discriminant)) / (dot(ray.direction,ray.direction)));
 	
-		t = ((-1 * dot(ray.direction,eMinC) / dot(ray.direction,ray.direction)) - (sqrt(discriminant)) / (dot(ray.direction,ray.direction)));
-		//cout << "double contact min = " << tmin << endl;
 		hit.part = part;
 		vec3 pointmin = ray.Point(tmin);
 		vec3 pointplus = ray.Point(tplus);
 		double distancemin = sqrt(pow(pointmin[0] - ray.endpoint[0],2) + pow(pointmin[1] - ray.endpoint[1],2) + pow(pointmin[2] - ray.endpoint[2],2));
 		double distanceplus = sqrt(pow(pointplus[0] - ray.endpoint[0],2) + pow(pointplus[1] - ray.endpoint[1],2) + pow(pointplus[2] - ray.endpoint[2],2));
-		if (distancemin < distanceplus)
+		if (distancemin > 0 && distancemin < distanceplus)
 		{
 			hit.dist = tmin;
 		}
-		else
+		else if (distanceplus > 0)
 		{
 			hit.dist = tplus;
 		}
 		hit.object = this;
-		//cout << "double distancemin = " << distancemin << endl;
-		//cout << "double distanceplus = " << distanceplus << endl;
+		
 	}
 	
-	//cout << "end sphere intersection" << endl;
     return hit;
 }
 
