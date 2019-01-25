@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "vec.h"
-
+using namespace std;
 class Object;
 class Ray
 {
@@ -21,6 +21,7 @@ public:
 
     vec3 Point(double t) const
     {
+	cout << "ray point return" << endl;
         return endpoint+direction*t;
     }
 };

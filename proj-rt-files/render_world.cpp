@@ -86,12 +86,13 @@ vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
 
 	vec3 point = ray.Point(hit.dist);	
 	cout << "hit.part = " << hit.part << endl;
-	cout << "hit.normal = " << hit.object->Normal(point,hit.part);
-
+	cout << "ray point = " << ray.Point(hit.dist) << endl; 
+	cout << "object = " << hit.object << endl;
+	
 	if (hit.object != NULL)
 	{
 		cout << "material shader = " << hit.object->material_shader << endl;
-		cout << "ray point = " << ray.Point(hit.dist) << endl; 
+		cout << "hit.normal = " << hit.object->Normal(point,hit.part);
 		cout << "object is exists" << endl;
 		color = hit.object->material_shader->Shade_Surface(ray,ray.Point(hit.dist),hit.object->Normal(ray.Point(hit.dist),hit.part),recursion_depth);
 		cout << "object color assined" << endl;
