@@ -55,12 +55,12 @@ vec3 Camera::World_Position(const ivec2& pixel_index)
     	vertCy[1] = (vertical_vector[1] * cells[1]);
     	vertCy[2] = vertical_vector[2] * cells[1];
     	
-	cout << endl;
-	cout << "horizontal_vector = " << horzCx << endl;
-	cout << "vertical_vector = " << vertCy << endl;
+//	cout << endl;
+//	cout << "horizontal_vector = " << horzCx << endl;
+//	cout << "vertical_vector = " << vertCy << endl;
 	
 	result = (film_position + horzCx + vertCy);
-    	cout << "worlpos = " << result << endl;
+  //  	cout << "worlpos = " << result << endl;
 	cout << endl;
 	return result;
 }

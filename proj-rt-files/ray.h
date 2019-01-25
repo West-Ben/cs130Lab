@@ -21,7 +21,7 @@ public:
 
     vec3 Point(double t) const
     {
-	cout << "ray point return" << endl;
+	//cout << "ray point return" << endl;
         return endpoint+direction*t;
     }
 };

@@ -5,26 +5,26 @@ using namespace std;
 Hit Sphere::Intersection(const Ray& ray, int part) const
 {
     //TODO;
-	cout << "start sphere intersection" << endl;
+//	cout << "start sphere intersection" << endl;
     Hit hit;
 	double t;
 	double distance;
     vec3 eMinC;
-	cout << endl;
-	cout << "endpoint = " << ray.endpoint << endl;
-	cout << "center = " << center << endl;
-	cout << "ray direction = " << ray.direction << endl;
-	cout << "radius = " << radius << endl;
-	cout << endl;
+//	cout << endl;
+//	cout << "endpoint = " << ray.endpoint << endl;
+//	cout << "center = " << center << endl;
+//	cout << "ray direction = " << ray.direction << endl;
+	//cout << "radius = " << radius << endl;
+	//cout << endl;
 	eMinC = (ray.endpoint - center);
 
     double discriminant = pow(dot(ray.direction,eMinC),2) - (dot(ray.direction,ray.direction)*(dot(eMinC,eMinC) - pow(radius,2)));
-	cout << "discriminant = " << discriminant << endl;
-	cout << endl;
+	//cout << "discriminant = " << discriminant << endl;
+	//cout << endl;
 	
 	if (discriminant <= 0)
 	{
-		cout << "no intersection" << endl;
+		//cout << "no intersection" << endl;
 		hit.object = NULL;
 		return hit;
 	}
@@ -34,7 +34,7 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
 		double tplus = ((-1 * dot(ray.direction,eMinC) / dot(ray.direction,ray.direction)) + (sqrt(discriminant)) / (dot(ray.direction,ray.direction)));
 	
 		t = ((-1 * dot(ray.direction,eMinC) / dot(ray.direction,ray.direction)) - (sqrt(discriminant)) / (dot(ray.direction,ray.direction)));
-		cout << "double contact min = " << tmin << endl;
+		//cout << "double contact min = " << tmin << endl;
 		hit.part = part;
 		vec3 pointmin = ray.Point(tmin);
 		vec3 pointplus = ray.Point(tplus);
@@ -49,23 +49,23 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
 			hit.dist = tplus;
 		}
 		hit.object = this;
-		cout << "double distancemin = " << distancemin << endl;
-		cout << "double distanceplus = " << distanceplus << endl;
+		//cout << "double distancemin = " << distancemin << endl;
+		//cout << "double distanceplus = " << distanceplus << endl;
 	}
 	
-	cout << "end sphere intersection" << endl;
+	//cout << "end sphere intersection" << endl;
     return hit;
 }
 
 vec3 Sphere::Normal(const vec3& point, int part) const
 {
-	cout << "sphere normal" << endl;
+//	cout << "sphere normal" << endl;
     vec3 normal;
-	cout << "start sphere normal" << endl;
+//	cout << "start sphere normal" << endl;
     //TODO; // compute the normal direction
 	normal = (point - center);
 	return normal.normalized();
-	cout << "end sphere normal" << endl;
+//	cout << "end sphere normal" << endl;
 }
 
 Box Sphere::Bounding_Box(int part) const
