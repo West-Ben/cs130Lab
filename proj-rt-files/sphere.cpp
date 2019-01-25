@@ -22,22 +22,11 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
 	cout << "discriminant = " << discriminant << endl;
 	cout << endl;
 	
-	if (discriminant < 0)
+	if (discriminant <= 0)
 	{
 		cout << "no intersection" << endl;
 		hit.object = NULL;
 		return hit;
-	}
-	else if (discriminant == 0)
-	{
-		t = -(dot(ray.direction,eMinC)) / (dot(ray.direction,ray.direction));
-		cout << "single contact t = " << t << endl; 
-		hit.part = part;
-		vec3 point = ray.Point(t);
-		distance = sqrt(pow(point[0] - ray.endpoint[0],2) + pow(point[1] - ray.endpoint[1],2) + pow(point[2] - ray.endpoint[2],2));
-		cout << "single contact distance = " << distance << endl;
-		hit.dist = t;
-		hit.object = new Sphere(center,radius); 
 	}
 	else
 	{
@@ -59,6 +48,7 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
 		{
 			hit.dist = tplus;
 		}
+		hit.object = this;
 		cout << "double distancemin = " << distancemin << endl;
 		cout << "double distanceplus = " << distanceplus << endl;
 	}
@@ -74,11 +64,7 @@ vec3 Sphere::Normal(const vec3& point, int part) const
 	cout << "start sphere normal" << endl;
     //TODO; // compute the normal direction
 	normal = (point - center);
-    normal[0] *= 2;
-	normal[1] *= 2;
-	normal[2] *= 2;
-	normal.normalized();
-	return normal;
+	return normal.normalized();
 	cout << "end sphere normal" << endl;
 }
 
