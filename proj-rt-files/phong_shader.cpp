@@ -8,18 +8,18 @@ vec3 Phong_Shader::
 Shade_Surface(const Ray& ray,const vec3& intersection_point,
     const vec3& normal,int recursion_depth) const
 {
-    vec3 color = color_ambient + render_world.lights[i].Emitted_Light(lightRay) ;
-	vec3 h = (ray + lightRay).normalized();
+    vec3 color = [0,0,0];
     //TODO; //determine the color
-	for (int i = 0; i < render_world.lights.size(); i++)
+	for (int i = 0; i < lights.size(); i++)
 	{
 		Ray lightRay(intersection_point,(render_world.lights[i].position - intersection_point).normalized());
-		Hit hit = render_world.Closest_Intersection(lightRay);.
-		if (hit.dist < )
+		Hit hit = render_world.Closest_Intersection(lightRay);
 		if (hit.object == NULL)
 		{
-			color += (render_world.lights[i].Emitted_Light(lightRay) * color_diffuse * max(0,dot(normal,lightRay)))
-			+ (render_world.lights[i].Emitted_Light(lightRay) * color_specular * max(0,dot(h,ray)));
+			vec3 h = (ray + lightRay).normalized();
+			color += ( color_ambient * lights[i].Emitted_Light(lightRay)) 
+			+ (lights[i].Emitted_Light(lightRay) * color_diffuse * max(0,dot(normal,lightRay)))
+			+ (lights[i].Emitted_Light(lightRay) * color_specular * max(0,dot(h,ray)));
 		}
 	}
 	
