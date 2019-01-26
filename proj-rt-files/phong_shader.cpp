@@ -3,6 +3,7 @@
 #include "ray.h"
 #include "render_world.h"
 #include "object.h"
+using namespace std;
 
 vec3 Phong_Shader::
 Shade_Surface(const Ray& ray,const vec3& intersection_point,
@@ -15,7 +16,9 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 	{
 		Ray lightRay(intersection_point,(world.lights[i]->position - intersection_point).normalized());
 		Hit hit = world.Closest_Intersection(lightRay);
-		if (hit.object == NULL && hit.dist < ((double)(1/lightRay.direction.magnitude_squared()) * world.lights[i]->brightness))
+		cout << endl;
+		cout << "drop off distance = " << ((double)(1/(intersection_point - world.lights[i]->position).magnitude_squared()) * world.lights[i]->brightness) << endl;
+		if (hit.object == NULL && hit.dist < ((double)(1/(intersection_point - world.lights[i]->position).magnitude_squared()) * world.lights[i]->brightness))
 		{
 			vec3 h = ((((double)-1) * ray.direction) + lightRay.direction).normalized();
 			color += (world.lights[i]->Emitted_Light(lightRay.direction)) * ((color_diffuse * max((double)0,(double)dot(normal,lightRay.direction))) 
