@@ -14,7 +14,7 @@ Hit Plane::Intersection(const Ray& ray, int part) const
 	if (dot(normal,ray.direction) == 0)
 	{
 		hit.object = NULL;
-		hit.dist = -1;
+		hit.dist = 0;
 		hit.part = part;
 		return hit;
 	}
@@ -22,17 +22,16 @@ Hit Plane::Intersection(const Ray& ray, int part) const
 	double distance = sqrt(pow(x1[0] - ray.endpoint[0],2) + pow(x1[1] - ray.endpoint[1],2) + pow(x1[2] - ray.endpoint[2],2));
 	double t = -(dot(normal,ray.endpoint) + distance)/(dot(normal,ray.direction));
 	
-	vec3 point = ray.Point(t);
 	if (t < 0)
 	{
 		hit.object = NULL;
-		hit.dist = -1;
+		hit.dist = 0;
 		hit.part = part;
 	}
 	else
 	{
 		hit.object = this;
-		hit.dist = sqrt(pow(point[0] - ray.endpoint[0],2) + pow(point[1] - ray.endpoint[1],2) + pow(point[2] - ray.endpoint[2],2));
+		hit.dist = t;
 		hit.part = part;
 	}
 //	cout << "return plane intersection" << endl;
