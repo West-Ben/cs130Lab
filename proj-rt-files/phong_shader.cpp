@@ -12,6 +12,7 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 	color[0] = 0;
 	color[1] = 0;
 	color[2] = 0;
+	color += ( color_ambient * world.lights[i]->Emitted_Light(lightRay.direction)
     //TODO; //determine the color
 	for (int i = 0; i < world.lights.size(); i++)
 	{
@@ -20,9 +21,8 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 		if (hit.object == NULL)
 		{
 			vec3 h = (ray.direction + lightRay.direction).normalized();
-			color += ( color_ambient * world.lights[i]->Emitted_Light(lightRay.direction)) 
-			+ (world.lights[i]->Emitted_Light(lightRay.direction) * color_diffuse * max((double)0,(double)dot(normal,lightRay.direction)))
-			+ (world.lights[i]->Emitted_Light(lightRay.direction) * color_specular * max((double)0,(double)dot(h,ray.direction)));
+			color += (world.lights[i]->Emitted_Light(lightRay.direction) * color_diffuse * max((double)0,(double)dot(normal,lightRay.direction)));
+			//+ (world.lights[i]->Emitted_Light(lightRay.direction) * color_specular * max((double)0,(double)dot(h,ray.direction)));
 		}
 	}
 	
