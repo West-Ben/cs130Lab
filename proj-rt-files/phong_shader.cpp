@@ -23,7 +23,7 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 		}
 		else
 		{
-			world.background_shader->Shade_Surface(ray,intersection_point,normal.recursion_depth);
+			world.background_shader->Shade_Surface(ray,intersection_point,normal,recursion_depth);
 		}
 	}
 	
