@@ -18,7 +18,8 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 		Hit hit = world.Closest_Intersection(lightRay);
 		cout << endl;
 		cout << "drop off distance = " << ((double)(1/(intersection_point - world.lights[i]->position).magnitude_squared()) * world.lights[i]->brightness) << endl;
-		if (hit.object == NULL && hit.dist < ((double)(1/(intersection_point - world.lights[i]->position).magnitude_squared()) * world.lights[i]->brightness))
+		cout << "hit distance = " << hit.dist << endl;
+		if (hit.object == NULL && hit.dist > 0 && hit.dist < ((double)(1/(intersection_point - world.lights[i]->position).magnitude_squared()) * world.lights[i]->brightness))
 		{
 			vec3 h = ((((double)-1) * ray.direction) + lightRay.direction).normalized();
 			color += (world.lights[i]->Emitted_Light(lightRay.direction)) * ((color_diffuse * max((double)0,(double)dot(normal,lightRay.direction))) 
