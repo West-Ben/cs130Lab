@@ -13,16 +13,16 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 	color[1] = 0;
 	color[2] = 0;
     //TODO; //determine the color
-	for (int i = 0; i < Render_World.lights.size(); i++)
+	for (int i = 0; i < world.lights.size(); i++)
 	{
-		Ray lightRay(intersection_point,(Render_World.lights[i].position - intersection_point).normalized());
-		Hit hit = Render_World.Closest_Intersection(lightRay);
+		Ray lightRay(intersection_point,(world.lights[i].position - intersection_point).normalized());
+		Hit hit = world.Closest_Intersection(lightRay);
 		if (hit.object == NULL)
 		{
 			vec3 h = (ray.direction + lightRay.direction).normalized();
-			color += ( color_ambient * Render_World.lights[i].Emitted_Light(lightRay.direction)) 
-			+ (Render_World.lights[i].Emitted_Light(lightRay.direction) * color_diffuse * max((double)0,(double)dot(normal,lightRay.direction)))
-			+ (Render_World.lights[i].Emitted_Light(lightRay.direction) * color_specular * max((double)0,(double)dot(h,ray.direction)));
+			color += ( color_ambient * world.lights[i].Emitted_Light(lightRay.direction)) 
+			+ (world.lights[i].Emitted_Light(lightRay.direction) * color_diffuse * max((double)0,(double)dot(normal,lightRay.direction)))
+			+ (world.lights[i].Emitted_Light(lightRay.direction) * color_specular * max((double)0,(double)dot(h,ray.direction)));
 		}
 	}
 	
