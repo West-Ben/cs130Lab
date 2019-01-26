@@ -39,6 +39,7 @@ Hit Render_World::Closest_Intersection(const Ray& ray)
 		{
 //			cout << "intersect being assigned " << endl;
 			hit = intersect;
+			cout << "closest dist = " << hit.dist << endl;
 		}
 				
 	}
