@@ -10,25 +10,25 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
     const vec3& normal,int recursion_depth) const
 {
     vec3 color;
+	normal.normalized();
+	ray.direction.normalized();
+
 	color = ( color_ambient * world.ambient_intensity);
     //TODO; //determine the color
+
 	for (int i = 0; i < world.lights.size(); i++)
 	{
 		Ray lightRay(intersection_point,(world.lights[i]->position - intersection_point).normalized());
 		Hit hit = world.Closest_Intersection(lightRay);
-		cout << endl;
-		cout << "drop off distance = " << ((double)(1/(intersection_point - world.lights[i]->position).magnitude_squared()) * world.lights[i]->brightness) << endl;
-		cout << "hit distance = " << hit.dist << endl;
-		if (hit.object == NULL && hit.dist > 0 && hit.dist < ((double)(1/(intersection_point - world.lights[i]->position).magnitude_squared()) * world.lights[i]->brightness))
+
+		double dropoff  = ((double)(1/(intersection_point - world.lights[i]->position).magnitude_squared()) * world.lights[i]->Emitted_Light(lightRay.direction).magnitude());
+		
+		if (hit.object == NULL)
 		{
 			vec3 h = ((((double)-1) * ray.direction) + lightRay.direction).normalized();
-			color += (world.lights[i]->Emitted_Light(lightRay.direction)) * ((color_diffuse * max((double)0,(double)dot(normal,lightRay.direction))) 
-			+ (color_specular * pow(max((double)0,(double)dot(h,ray.direction)),specular_power)));
-		}
-		else
-		{
-			world.background_shader->Shade_Surface(ray,intersection_point,normal,recursion_depth);
-		}
+			vec3 L = (world.lights[i]->Emitted_Light(lightRay.direction) * ((color_diffuse * max((double)0,(double)dot(normal,lightRay.direction))) + (color_specular * pow(max((double)0,(double)dot(h,ray.direction)),specular_power))));
+			color = dropoff * L;
+		}	
 	}
 	
     return color;

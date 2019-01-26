@@ -34,7 +34,6 @@ Hit Plane::Intersection(const Ray& ray, int part) const
 		hit.dist = t;
 		hit.part = part;
 	}
-	cout << "return dist = " << hit.dist << endl;
     return hit;
 }
 
