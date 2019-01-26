@@ -21,10 +21,9 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 		Ray lightRay(intersection_point,(world.lights[i]->position - intersection_point).normalized());
 		Hit hit = world.Closest_Intersection(lightRay);
 
-		double dropoff  = ((double)(1/(intersection_point - world.lights[i]->position).magnitude_squared()) * world.lights[i]->Emitted_Light(lightRay.direction).magnitude());
-		
 		if (hit.object == NULL)
 		{
+			double dropoff  = (double)(1/(intersection_point - world.lights[i]->position).magnitude_squared());
 			vec3 h = ((((double)-1) * ray.direction) + lightRay.direction).normalized();
 			vec3 L = (world.lights[i]->Emitted_Light(lightRay.direction) * ((color_diffuse * max((double)0,(double)dot(normal,lightRay.direction))) + (color_specular * pow(max((double)0,(double)dot(h,ray.direction)),specular_power))));
 			color = dropoff * L;
