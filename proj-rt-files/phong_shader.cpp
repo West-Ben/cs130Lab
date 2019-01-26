@@ -12,7 +12,7 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 	color[0] = 0;
 	color[1] = 0;
 	color[2] = 0;
-	color += ( color_ambient * ambient_intensity)
+	color += ( color_ambient * world.ambient_intensity)
     //TODO; //determine the color
 	for (int i = 0; i < world.lights.size(); i++)
 	{
