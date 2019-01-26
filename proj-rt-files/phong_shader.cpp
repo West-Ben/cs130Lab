@@ -12,7 +12,7 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
     //TODO; //determine the color
 	for (int i = 0; i < lights.size(); i++)
 	{
-		Ray lightRay(intersection_point,(render_world.lights[i].position - intersection_point).normalized());
+		Ray lightRay(intersection_point,(lights[i].position - intersection_point).normalized());
 		Hit hit = render_world.Closest_Intersection(lightRay);
 		if (hit.object == NULL)
 		{
