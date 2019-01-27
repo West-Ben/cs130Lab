@@ -22,7 +22,7 @@ Render_World::~Render_World()
 // to ensure that hit.dist>=small_t.
 Hit Render_World::Closest_Intersection(const Ray& ray)
 {
-	double min_t = (1.8 * pow(10,100));
+	double min_t = (1.8 * pow(10,300));
 	Hit hit;
 	hit.object = NULL;
 	hit.dist = min_t;

@@ -12,21 +12,25 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
     vec3 color;
 	normal.normalized();
 	ray.direction.normalized();
+		
 
-	color = ( color_ambient * world.ambient_intensity);
+
+	color = ( world.ambient_color * world.ambient_intensity);
     //TODO; //determine the color
-
+	cout << "normal = " << normal << endl;
 	for (int i = 0; i < world.lights.size(); i++)
 	{
-		Ray lightRay(intersection_point,(world.lights[i]->position - intersection_point).normalized());
-		Hit hit = world.Closest_Intersection(lightRay);
+		Ray shadowRay(intersection_point,(world.lights[i]->position - intersection_point).normalized());
+		cout << "shadowRay direction = " << shadowRay.direction << endl;
+		Hit hit = world.Closest_Intersection(shadowRay);
 
 		if (hit.object == NULL)
 		{
 			double dropoff  = (double)(1/(intersection_point - world.lights[i]->position).magnitude_squared());
-			vec3 h = ((((double)-1) * ray.direction) + lightRay.direction).normalized();
-			vec3 L = (world.lights[i]->Emitted_Light(lightRay.direction) * ((color_diffuse * max((double)0,(double)dot(normal,lightRay.direction))) + (color_specular * pow(max((double)0,(double)dot(h,ray.direction)),specular_power))));
-			color = dropoff * L;
+			vec3 h = ((((double)-1) * ray.direction) + shadowRay.direction).normalized();
+			vec3 L = ( world.lights[i]->Emitted_Light(shadowRay.direction)) * ((color_diffuse * max((double)0,(double)dot(normal,shadowRay.direction))) + (color_specular * pow(max((double)0,(double)dot(h,ray.direction)),specular_power)));
+			
+			color += (dropoff * L * 3 );
 		}	
 	}
 	
