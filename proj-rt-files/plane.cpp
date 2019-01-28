@@ -18,11 +18,12 @@ Hit Plane::Intersection(const Ray& ray, int part) const
 		hit.part = part;
 		return hit;
 	}
-	
+	double denom = dot(ray.direction,normal);
 	double distance = sqrt(pow(x1[0] - ray.endpoint[0],2) + pow(x1[1] - ray.endpoint[1],2) + pow(x1[2] - ray.endpoint[2],2));
-	double t = -(dot(normal,ray.endpoint) + distance)/(dot(normal,ray.direction));
+	//double t = -(dot(normal,ray.endpoint) + distance)/(dot(normal,ray.direction));
 	
-	if (t < 0)
+	
+	if (denom > 1e-6)
 	{
 		hit.object = NULL;
 		hit.dist = 0;
@@ -30,6 +31,7 @@ Hit Plane::Intersection(const Ray& ray, int part) const
 	}
 	else
 	{
+		double t = (dot(dot(x1,ray.endpoint),normal)/(denom);
 		hit.object = this;
 		hit.dist = t;
 		hit.part = part;
