@@ -9,8 +9,8 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
     vec3 eMinC;
 	eMinC = (ray.endpoint - center);
 
-    double discriminant = pow(dot(ray.direction,eMinC),2) - (dot(ray.direction,ray.direction)*(dot(eMinC,eMinC) - pow(radius,2)));
-
+	double discriminant = pow(dot(ray.direction,eMinC),2) - (dot(ray.direction,ray.direction)*(dot(eMinC,eMinC) - pow(radius,2)));
+	
 	if (discriminant <= 0)
 	{
 		hit.object = NULL;
@@ -22,15 +22,12 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
 		double tplus = ((-1 * dot(ray.direction,eMinC) / dot(ray.direction,ray.direction)) + (sqrt(discriminant)) / (dot(ray.direction,ray.direction)));
 	
 		hit.part = part;
-		vec3 pointmin = ray.Point(tmin);
-		vec3 pointplus = ray.Point(tplus);
-		double distancemin = sqrt(pow(pointmin[0] - ray.endpoint[0],2) + pow(pointmin[1] - ray.endpoint[1],2) + pow(pointmin[2] - ray.endpoint[2],2));
-		double distanceplus = sqrt(pow(pointplus[0] - ray.endpoint[0],2) + pow(pointplus[1] - ray.endpoint[1],2) + pow(pointplus[2] - ray.endpoint[2],2));
-		if (distancemin > 1e-3 && distancemin < distanceplus)
+		
+		if (tmin > -5 && tmin < tplus)
 		{
 			hit.dist = tmin;
 		}
-		else if (distanceplus > 1e-3)
+		else if (tplus > -5)
 		{
 			hit.dist = tplus;
 		}
