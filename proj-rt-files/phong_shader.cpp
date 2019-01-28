@@ -11,7 +11,7 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 {
     vec3 color;
 		
-	color = ( world.ambient_color * world.ambient_intensity);
+	color = (color_ambient *  world.ambient_color * world.ambient_intensity);
     //TODO; //determine the color
 
 	for (int i = 0; i < world.lights.size(); i++)
@@ -24,8 +24,8 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 		{
 			double dropoff  = (double)(1/(intersection_point - world.lights[i]->position).magnitude_squared());
 			vec3 h = ((((double)-1) * ray.direction) + shadowRay.direction).normalized();
-			vec3 L = ( world.lights[i]->Emitted_Light(world.lights[i]->position - intersection_point) *color_diffuse * max((double)0,(double)dot(normal,(world.lights[i]->position - intersection_point)))) + (color_specular * pow(max((double)0,(double)dot(h,ray.direction)),specular_power));
-			color +=  L;
+			vec3 L = ( world.lights[i]->Emitted_Light(world.lights[i]->position - intersection_point) *color_diffuse * max((double)0,(double)dot(normal,(world.lights[i]->position - intersection_point).normalized()))) + (color_specular * pow(max((double)0,(double)dot(h,ray.direction)),specular_power));
+			color += L;
 
 		}	
 	}

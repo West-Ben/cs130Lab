@@ -26,11 +26,11 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
 		vec3 pointplus = ray.Point(tplus);
 		double distancemin = sqrt(pow(pointmin[0] - ray.endpoint[0],2) + pow(pointmin[1] - ray.endpoint[1],2) + pow(pointmin[2] - ray.endpoint[2],2));
 		double distanceplus = sqrt(pow(pointplus[0] - ray.endpoint[0],2) + pow(pointplus[1] - ray.endpoint[1],2) + pow(pointplus[2] - ray.endpoint[2],2));
-		if (distancemin > 0 && distancemin < distanceplus)
+		if (distancemin > 1e-3 && distancemin < distanceplus)
 		{
 			hit.dist = tmin;
 		}
-		else if (distanceplus > 0)
+		else if (distanceplus > 1e-3)
 		{
 			hit.dist = tplus;
 		}
