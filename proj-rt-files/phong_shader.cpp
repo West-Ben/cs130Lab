@@ -17,14 +17,17 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 	for (int i = 0; i < world.lights.size(); i++)
 	{
 		Ray shadowRay(intersection_point,(world.lights[i]->position - intersection_point));
-	
-		Hit hit = world.Closest_Intersection(shadowRay);
-
+		Hit hit;
+		hit.object = NULL;
+		if (world.enable_shadows){
+			hit = world.Closest_Intersection(shadowRay);
+		}
 		if (hit.object == NULL)
 		{
-			double dropoff  = (double)(1/(intersection_point - world.lights[i]->position).magnitude_squared());
-			vec3 r = ray.direction - (2 * dot(ray.direction,normal) * normal);
-			vec3 L = ( world.lights[i]->Emitted_Light(world.lights[i]->position - intersection_point) *color_diffuse * max((double)0,(double)dot(normal,(world.lights[i]->position - intersection_point).normalized()))) + (color_specular * pow(max((double)0,(double)dot(((double)-1 * ray.direction),r)),specular_power));
+			//double dropoff  = (double)(1/(intersection_point - world.lights[i]->position).magnitude_squared());
+			vec3 r = (2 * dot(shadowRay.direction,normal) * normal) - (shadowRay.direction);
+			
+			vec3 L = (world.lights[i]->Emitted_Light(world.lights[i]->position - intersection_point)) * ((color_diffuse * max((double)0,(double)dot(normal,(world.lights[i]->position - intersection_point).normalized()))) + (color_specular * pow(max((double)0,(double)dot(((double)-1 * ray.direction),r)),specular_power)));
 			color += L;
 
 		}	
