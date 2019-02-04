@@ -12,17 +12,7 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
     Ray r;
     r.endpoint = intersection_point;
     r.direction = (ray.direction) - (2 * dot(ray.direction,normal) * normal);
+
+    return (((1 - reflectivity) * color) + (reflectivity * world.Cast_Ray(r,(recursion_depth - 1))));
     
-    Hit hit = world.Closest_Intersection(r);
-    
-    if(hit.object == NULL || recursion_depth == 1)
-    {
-       return  color;
-    } 
-    else
-    {
-	vec3 point = r.Point(hit.dist);
-	
-    	return color += (reflectivity * Shade_Surface(r,point,hit.object->Normal(point,hit.part),(recursion_depth - 1)));
-    }
 }
