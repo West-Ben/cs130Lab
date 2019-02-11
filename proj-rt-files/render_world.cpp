@@ -26,23 +26,18 @@ Hit Render_World::Closest_Intersection(const Ray& ray)
 	Hit hit;
 	hit.object = NULL;
 	hit.dist = min_t;
-	hit.part = 0;
-//	cout << "objects.size = " << objects.size() << endl;	
+	hit.part = 0;	
 	for(int i = 0; i < objects.size(); i++)
 	{	
 		for ( int j = 0; j < objects[i]->number_parts; j++)
 		{
-			//cout << "j = " << j << endl;
-			//cout << "number of parts = " << objects[i]->number_parts << endl;
 			Hit intersect = objects[i]->Intersection(ray,j);
 			if(intersect.object != NULL && intersect.dist > 0  && intersect.dist < hit.dist)
 			{
 				hit = intersect;		
 			}
 		}
-	}
-
-//	cout << "return closest " << endl;		
+	}	
     return hit;
 }
 
@@ -56,7 +51,6 @@ void Render_World::Render_Pixel(const ivec2& pixel_index)
     Ray ray(camera.position,worldPos);
     vec3 color=Cast_Ray(ray,recursion_depth_limit);
     camera.Set_Pixel(pixel_index,Pixel_Color(color));
-//	cout << "end render_pixel" << endl;
 }
 
 void Render_World::Render()
@@ -73,7 +67,6 @@ void Render_World::Render()
 // or the background color if there is no object intersection
 vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
 {
-//	cout << "start cast_ray" << endl;
     vec3 color;
     //TODO; // determine the color here
 	
@@ -87,7 +80,6 @@ vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
 	}
 	else
 	{
-//		cout << "object is NULL" << endl;
 		vec3 zero;
 
 		zero[0] = 0;
@@ -95,7 +87,6 @@ vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
 		zero[2] = 0;
 		color = background_shader->Shade_Surface(ray,zero,zero,0);
 	}
-//	cout << "end cast_ray" << endl;
     return color;
 }
 
@@ -108,7 +99,6 @@ void Render_World::Initialize_Hierarchy()
 	{
 		for (int j = 0; j < objects[i]->number_parts; j++)
 		{
-//			cout << "Initialize_Hierarchy loop i = " << i << " j = " << j << endl;
 			Entry ent;
 			ent.obj = objects[i];
 			ent.part = j;
@@ -119,5 +109,4 @@ void Render_World::Initialize_Hierarchy()
 	
     hierarchy.Reorder_Entries();
     hierarchy.Build_Tree();
-//	cout << "end hierarchy" << endl;
 }

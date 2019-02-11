@@ -61,7 +61,7 @@ vec3 Mesh::Normal(const vec3& point, int part) const
 {
     assert(part>=0);
     //TODO;
-    vec3 normal = cross((vertices[triangles[part][2]] -  vertices[triangles[part][0]] ),(vertices[triangles[part][1]] - vertices[triangles[part][0]] ));
+    vec3 normal = cross((vertices[triangles[part][1]] -  vertices[triangles[part][0]] ),(vertices[triangles[part][2]] - vertices[triangles[part][0]]));
     return normal.normalized();
 
 }

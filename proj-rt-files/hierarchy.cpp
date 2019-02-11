@@ -43,4 +43,5 @@ void Hierarchy::Build_Tree()
 void Hierarchy::Intersection_Candidates(const Ray& ray, std::vector<int>& candidates) const
 {
     TODO;
+
 }
