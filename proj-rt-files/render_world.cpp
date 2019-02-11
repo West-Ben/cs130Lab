@@ -29,16 +29,16 @@ Hit Render_World::Closest_Intersection(const Ray& ray)
 	hit.part = 0;
 //	cout << "objects.size = " << objects.size() << endl;	
 	for(int i = 0; i < objects.size(); i++)
-	{
-//		cout << "object number of parts =" << objects[i]->number_parts << endl;
-//		cout << "object material shader = " << objects[i]->material_shader << endl;
-
-//		cout << "closest loop " << i << endl;
-		Hit intersect = objects[i]->Intersection(ray,0);
-		if(intersect.object != NULL && intersect.dist > 0  && intersect.dist < hit.dist)
+	{	
+		for ( int j = 0; j < objects[i]->number_parts; j++)
 		{
-//			cout << "intersect being assigned " << endl;
-			hit = intersect;		
+			//cout << "j = " << j << endl;
+			//cout << "number of parts = " << objects[i]->number_parts << endl;
+			Hit intersect = objects[i]->Intersection(ray,j);
+			if(intersect.object != NULL && intersect.dist > 0  && intersect.dist < hit.dist)
+			{
+				hit = intersect;		
+			}
 		}
 	}
 
@@ -113,6 +113,7 @@ void Render_World::Initialize_Hierarchy()
 			ent.obj = objects[i];
 			ent.part = j;
 			ent.box = objects[i]->Bounding_Box(j);
+			hierarchy.entries.push_back(ent);
 		}
 	}
 	
